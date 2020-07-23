@@ -174,7 +174,7 @@ fn view(model: &Model) -> Node<Msg> {
                 } else {
                     ev(Ev::Click, |_| Msg::Pause)
                 },
-                if model.pause { "⏸" } else { "▶" }
+                if model.pause { "▶" } else { "⏸" }
             ],
             canvas![id!("game-of-life-canvas")],
         ]

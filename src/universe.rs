@@ -74,6 +74,7 @@ impl Universe {
 
         self.cells = cells;
     }
+    /// Kill all the cells
     pub fn death() -> Universe {
         utils::set_panic_hook();
         let width = 64;
@@ -87,16 +88,17 @@ impl Universe {
             cells,
         }
     }
+    /// Generate random state for cell
     pub fn random() -> Universe {
         utils::set_panic_hook();
         let width = 64;
         let height = 64;
         let mut key = [0u8; 16];
         OsRng.fill_bytes(&mut key);
-        let random_u64 = OsRng.next_u64();
+
         let cells = (0..width * height)
             .map(|i| {
-                if random_u64 % 2 == 0 || random_u64 % 7 == 0 {
+                if OsRng.next_u64() % 2 == 0 {
                     Cell::Alive
                 } else {
                     Cell::Dead

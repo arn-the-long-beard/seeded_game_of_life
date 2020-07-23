@@ -56,6 +56,8 @@ enum Msg {
     Play,
     Pause,
     Draw,
+    Destroy,
+    Random,
 }
 
 // `update` describes how to handle each `Msg`.
@@ -69,6 +71,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::Draw => {
             if model.pause {
             } else {
+                log!("rendering");
                 model.universe.tick();
                 draw_grid(model);
                 draw_cells(model);
@@ -80,6 +83,8 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
             orders.after_next_render(|_| Msg::Draw);
         }
         Msg::Pause => model.pause = true,
+        Msg::Destroy => model.universe = Universe::death(),
+        Msg::Random => model.universe = Universe::random(),
     }
 }
 
@@ -167,6 +172,8 @@ fn view(model: &Model) -> Node<Msg> {
         div!["Loading canvas"]
     } else {
         section![
+            button![id!("random"), ev(Ev::Click, |_| Msg::Random), "random"],
+            button![id!("destroy"), ev(Ev::Click, |_| Msg::Destroy), "destroy"],
             button![
                 id!("play-pause"),
                 if model.pause {

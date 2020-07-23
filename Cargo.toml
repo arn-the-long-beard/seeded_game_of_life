@@ -16,10 +16,16 @@ crate-type = ["cdylib"]
 wasm-bindgen-test = "0.3.13"
 
 [dependencies]
+rand = "0.7.3"
+rand_core = "0.5.1"
 # This commit points to Seed 0.7.0 with important fixes.
 # Replace with `seed = "0.8.0"` (or newer) once released.
 seed = { git = "https://github.com/seed-rs/seed", rev = "0a538f0" }
-
+[dependencies.web-sys]
+version = "0.3"
+features = [
+  "console",
+]
 [profile.release]
 lto = true
 opt-level = 'z'

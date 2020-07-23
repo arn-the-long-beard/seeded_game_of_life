@@ -7,9 +7,9 @@
 ### Motivation
 
 Well, I followed the very nice tutorial from there https://rustwasm.github.io/docs/book/introduction.html .
-And it looks so awesome to use Rust for doing web stuff that I got more Curious. As a redux/ngrx/angular guy, I know many of the challenge of javascript/typescript.
+And it looks so awesome to use Rust for doing web stuff that I got more Curious. As a redux/ngrx/angular guy, I know many of the challenges of javascript/typescript.
 So I was like , omg Rust is so OP , if we can use it for front end, then development, maintenance, team skill growth would be just so disruptive.
-Then I found seed and I was like >< so excited. After testing other alternative, 
+Then I found seed and I was like ><  <3 so excited. After testing other alternative, 
 I found that seed is the one that use the most the full potential of Rust and it is the easier to start new project with.
 
 

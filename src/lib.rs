@@ -235,8 +235,16 @@ fn view(model: &Model) -> Node<Msg> {
                 ],
                 label![attrs! { At::For => "ticks"}, "ticks"]
             ],
-            button![id!("random"), ev(Ev::Click, |_| Msg::Random), "random"],
-            button![id!("destroy"), ev(Ev::Click, |_| Msg::Destroy), "destroy"],
+            button![
+                id!("random"),
+                ev(Ev::Click, |_| Msg::Random),
+                "Random Reset"
+            ],
+            button![
+                id!("destroy"),
+                ev(Ev::Click, |_| Msg::Destroy),
+                "Ultimate Death"
+            ],
             button![
                 id!("play-pause"),
                 if model.pause {

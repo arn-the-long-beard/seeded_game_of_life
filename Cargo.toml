@@ -24,7 +24,7 @@ seed = { git = "https://github.com/seed-rs/seed", rev = "0a538f0" }
 [dependencies.web-sys]
 version = "0.3"
 features = [
-  "console","DomRect", "Element" , "MouseEvent","Event"
+  "console","DomRect", "Element" , "MouseEvent","Event" ,"Node"
 ]
 [profile.release]
 lto = true

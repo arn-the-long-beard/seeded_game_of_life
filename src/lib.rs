@@ -7,6 +7,7 @@ mod universe;
 mod utils;
 
 use crate::universe::{Cell, Universe};
+use seed::browser::util::get_value;
 use seed::{prelude::*, *};
 use std::cmp;
 
@@ -73,8 +74,13 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::Draw => {
             if model.pause {
             } else {
-                log!("rendering");
-                model.universe.tick();
+                let tick_input = document().get_element_by_id("ticks").unwrap();
+                let tick_frequency = get_value(tick_input.as_ref()).unwrap();
+                let tick_number = tick_frequency.parse::<i32>().unwrap();
+                for i in 0..tick_number {
+                    model.universe.tick();
+                }
+
                 draw_grid(model);
                 draw_cells(model);
                 orders.after_next_render(|_| Msg::Draw);
@@ -192,6 +198,20 @@ fn view(model: &Model) -> Node<Msg> {
         div!["Loading canvas"]
     } else {
         section![
+            p!["Ticks settings :"],
+            div![
+                input![
+                    id!("ticks"),
+                    1,
+                    attrs! {
+                        At::Name => "ticks",
+                        At::Type => "range",
+                        At::Min =>"1",
+                        At::Max =>"10"
+                    }
+                ],
+                label![attrs! { At::For => "ticks"}, "ticks"]
+            ],
             button![id!("random"), ev(Ev::Click, |_| Msg::Random), "random"],
             button![id!("destroy"), ev(Ev::Click, |_| Msg::Destroy), "destroy"],
             button![

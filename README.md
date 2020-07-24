@@ -12,6 +12,8 @@ So I was like , omg Rust is so OP , if we can use it for front end, then develop
 Then I found seed and I was like ><  <3 so excited. After testing other alternative, 
 I found that seed is the one that use the most the full potential of Rust and it is the easier to start new project with.
 
+This project is a **RAW** adaptation to Rust/Seed where it is easy to see the " translation " from js/wasm.
+I will make later a new branch of it with more worked out version of it where I use ElRef and have refactored code.
 
 ### 1. Clone the project
 

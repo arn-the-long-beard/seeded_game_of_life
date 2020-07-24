@@ -3,9 +3,11 @@
 // but some rules are too "annoying" or are not applicable for your case.)
 #![allow(clippy::wildcard_imports)]
 
+mod fps;
 mod universe;
 mod utils;
 
+use crate::fps::FpsCounter;
 use crate::universe::{Cell, Universe};
 use seed::browser::util::get_value;
 use seed::{prelude::*, *};
@@ -28,6 +30,7 @@ fn init(_: Url, orders: &mut impl Orders<Msg>) -> Model {
         universe: Universe::new(),
         canvas_height: 0,
         canvas_width: 0,
+        fps: FpsCounter::new(),
     }
 }
 
@@ -45,6 +48,7 @@ pub struct Model {
     pause: bool,
     canvas_height: u32,
     canvas_width: u32,
+    fps: FpsCounter,
 }
 // ------ ------
 //    Update
@@ -74,6 +78,22 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::Draw => {
             if model.pause {
             } else {
+                let fps = document().get_element_by_id("fps").unwrap();
+                let stats = model.fps.render();
+
+                let text = format!(
+                    "\
+                Frames per Second:
+         latest = {:?}
+avg of last 100 = {:?}
+min of last 100 = {:?}
+max of last 100 = {:?}
+                \
+                ",
+                    stats.fps, stats.mean, stats.min, stats.max
+                );
+
+                fps.set_text_content(Some(text.as_str()));
                 let tick_input = document().get_element_by_id("ticks").unwrap();
                 let tick_frequency = get_value(tick_input.as_ref()).unwrap();
                 let tick_number = tick_frequency.parse::<i32>().unwrap();
@@ -186,6 +206,8 @@ fn draw_cells(model: &mut Model) {
     ctx.stroke();
 }
 
+fn fps() {}
+
 // ------ ------
 //     View
 // ------ ------
@@ -198,6 +220,7 @@ fn view(model: &Model) -> Node<Msg> {
         div!["Loading canvas"]
     } else {
         section![
+            div![id!["fps"]],
             p!["Ticks settings :"],
             div![
                 input![

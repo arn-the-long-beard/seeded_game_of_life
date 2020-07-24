@@ -14,6 +14,7 @@ I found that seed is the one that use the most the full potential of Rust and it
 
 This project is a **RAW** adaptation to Rust/Seed where it is easy to see the " translation " from js/wasm.
 I will make later a new branch of it with more worked out version of it where I use ElRef and have refactored code.
+For now it does not contains the best practice or recommendation for using Seed.
 
 ### 1. Clone the project
 

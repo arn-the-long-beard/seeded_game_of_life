@@ -8,6 +8,7 @@ mod utils;
 
 use crate::universe::{Cell, Universe};
 use seed::{prelude::*, *};
+use std::cmp;
 
 // ------ ------
 //     Init
@@ -49,7 +50,7 @@ pub struct Model {
 // ------ ------
 
 // (Remove the line below once any of your `Msg` variants doesn't implement `Copy`.)
-#[derive(Copy, Clone)]
+// #[derive(Copy, Clone)]
 // `Msg` describes the different events you can modify state with.
 enum Msg {
     PrepareCanvas,
@@ -58,6 +59,7 @@ enum Msg {
     Draw,
     Destroy,
     Random,
+    CellClick(web_sys::MouseEvent),
 }
 
 // `update` describes how to handle each `Msg`.
@@ -85,6 +87,24 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::Pause => model.pause = true,
         Msg::Destroy => model.universe = Universe::death(),
         Msg::Random => model.universe = Universe::random(),
+        Msg::CellClick(event) => {
+            let canvas = canvas("game-of-life-canvas").unwrap();
+            let bounding_rect = canvas.get_bounding_client_rect();
+
+            let scale_x: f64 = f64::from(canvas.width()) / bounding_rect.width();
+            let scale_y: f64 = f64::from(canvas.height()) / bounding_rect.height();
+
+            let canvas_left: f64 = (f64::from(event.client_x()) - bounding_rect.left()) * scale_x;
+            let canvas_top: f64 = (f64::from(event.client_y()) - bounding_rect.top()) * scale_y;
+
+            let row_pos: f64 = (canvas_top / f64::from(model.cell_size + 1)).floor();
+            let col_pos: f64 = (canvas_left / f64::from(model.cell_size + 1)).floor();
+
+            let row: u32 = cmp::min(row_pos as u32, model.universe.height() - 1);
+            let col: u32 = cmp::min(col_pos as u32, model.universe.width() - 1);
+
+            model.universe.toggle_cell(row, col);
+        }
     }
 }
 
@@ -183,7 +203,13 @@ fn view(model: &Model) -> Node<Msg> {
                 },
                 if model.pause { "▶" } else { "⏸" }
             ],
-            canvas![id!("game-of-life-canvas")],
+            canvas![
+                id!("game-of-life-canvas"),
+                ev(Ev::Click, |event| {
+                    let mouse_event: web_sys::MouseEvent = event.unchecked_into();
+                    Msg::CellClick(mouse_event)
+                })
+            ],
         ]
     }
 }

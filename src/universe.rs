@@ -4,7 +4,6 @@ use std::fmt;
 use crate::utils;
 use web_sys::console;
 
-extern crate web_sys;
 // A macro to provide `println!(..)`-style syntax for `console.log` logging.
 macro_rules! log {
     ( $( $t:tt )* ) => {

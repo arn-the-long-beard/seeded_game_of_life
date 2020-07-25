@@ -4,7 +4,7 @@
 #![allow(clippy::wildcard_imports)]
 
 mod fps;
-mod universe;
+pub mod universe;
 mod utils;
 
 use crate::fps::FpsCounter;

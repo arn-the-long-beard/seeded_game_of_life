@@ -1,6 +1,6 @@
 [package]
 version = "0.1.0"
-name = "app_name"
+name = "seeded-game-of-life"
 repository = "https://github.com/seed-rs/seed-quickstart"
 authors = ["Your Name <email@address.com>"]
 description = "App Description"
@@ -10,7 +10,7 @@ readme = "./README.md"
 edition = "2018"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib","rlib"]
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.13"

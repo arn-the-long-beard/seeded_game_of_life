@@ -5,7 +5,6 @@
 
 mod fps;
 pub mod universe;
-mod utils;
 
 use crate::fps::FpsCounter;
 use crate::universe::{Cell, Universe};

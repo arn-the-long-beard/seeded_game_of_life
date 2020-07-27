@@ -1,4 +1,3 @@
-use crate::utils;
 use rand_core::{OsRng, RngCore};
 use std::fmt;
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -31,7 +30,6 @@ pub struct Universe {
 
 impl Universe {
     pub fn new() -> Universe {
-        utils::set_panic_hook();
         let width = 64;
         let height = 64;
 
@@ -66,7 +64,6 @@ impl Universe {
     }
     /// Kill all the cells
     pub fn death() -> Universe {
-        utils::set_panic_hook();
         let width = 64;
         let height = 64;
 
@@ -80,7 +77,6 @@ impl Universe {
     }
     /// Generate random state for cell
     pub fn random() -> Universe {
-        utils::set_panic_hook();
         let width = 64;
         let height = 64;
         let mut key = [0u8; 16];

@@ -215,53 +215,49 @@ fn fps() {}
 #[allow(clippy::trivially_copy_pass_by_ref)]
 // `view` describes what to display.
 fn view(model: &Model) -> Node<Msg> {
-    if model.canvas_width == 0 && model.canvas_height == 0 {
-        div!["Loading canvas"]
-    } else {
-        section![
-            div![id!["fps"]],
-            p!["Ticks settings :"],
-            div![
-                input![
-                    id!("ticks"),
-                    1,
-                    attrs! {
-                        At::Name => "ticks",
-                        At::Type => "range",
-                        At::Min =>"1",
-                        At::Max =>"10"
-                    }
-                ],
-                label![attrs! { At::For => "ticks"}, "ticks"]
+    section![
+        div![id!["fps"]],
+        p!["Ticks settings :"],
+        div![
+            input![
+                id!("ticks"),
+                1,
+                attrs! {
+                    At::Name => "ticks",
+                    At::Type => "range",
+                    At::Min =>"1",
+                    At::Max =>"10"
+                }
             ],
-            button![
-                id!("random"),
-                ev(Ev::Click, |_| Msg::Random),
-                "Random Reset"
-            ],
-            button![
-                id!("destroy"),
-                ev(Ev::Click, |_| Msg::Destroy),
-                "Ultimate Death"
-            ],
-            button![
-                id!("play-pause"),
-                if model.pause {
-                    ev(Ev::Click, |_| Msg::Play)
-                } else {
-                    ev(Ev::Click, |_| Msg::Pause)
-                },
-                if model.pause { "▶" } else { "⏸" }
-            ],
-            canvas![
-                id!("game-of-life-canvas"),
-                ev(Ev::Click, |event| {
-                    let mouse_event: web_sys::MouseEvent = event.unchecked_into();
-                    Msg::CellClick(mouse_event)
-                })
-            ],
-        ]
-    }
+            label![attrs! { At::For => "ticks"}, "ticks"]
+        ],
+        button![
+            id!("random"),
+            ev(Ev::Click, |_| Msg::Random),
+            "Random Reset"
+        ],
+        button![
+            id!("destroy"),
+            ev(Ev::Click, |_| Msg::Destroy),
+            "Ultimate Death"
+        ],
+        button![
+            id!("play-pause"),
+            if model.pause {
+                ev(Ev::Click, |_| Msg::Play)
+            } else {
+                ev(Ev::Click, |_| Msg::Pause)
+            },
+            if model.pause { "▶" } else { "⏸" }
+        ],
+        canvas![
+            id!("game-of-life-canvas"),
+            ev(Ev::Click, |event| {
+                let mouse_event: web_sys::MouseEvent = event.unchecked_into();
+                Msg::CellClick(mouse_event)
+            })
+        ],
+    ]
 }
 
 //     Start

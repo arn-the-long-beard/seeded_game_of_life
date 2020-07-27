@@ -1,5 +1,4 @@
 use seed::window;
-use seed::{prelude::*, *};
 use std::cmp;
 
 pub struct FpsCounter {

@@ -1,7 +1,6 @@
+use crate::utils;
 use rand_core::{OsRng, RngCore};
 use std::fmt;
-// use wasm_bindgen::prelude::*;
-use crate::utils;
 use web_sys::console;
 
 // A macro to provide `println!(..)`-style syntax for `console.log` logging.

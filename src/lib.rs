@@ -18,17 +18,22 @@ use std::cmp;
 
 // `init` describes what should happen when your app started.
 fn init(_: Url, orders: &mut impl Orders<Msg>) -> Model {
-    orders.after_next_render(|_| Msg::PrepareCanvas);
+    orders.after_next_render(|_| Msg::Draw);
+
+    let universe = Universe::new();
+    let cell_size = 5;
+    let canvas_width = (cell_size + 1) * universe.width() + 1;
+    let canvas_height = (cell_size + 1) * universe.height() + 1;
 
     Model {
-        cell_size: 5,
+        cell_size,
         grid_color: "#CCCCCC".to_string(),
         dead_color: "#FFFFFF".to_string(),
         alive_color: "#000000".to_string(),
         pause: false,
-        universe: Universe::new(),
-        canvas_height: 0,
-        canvas_width: 0,
+        universe,
+        canvas_height,
+        canvas_width,
         fps: FpsCounter::new(),
     }
 }
@@ -57,7 +62,6 @@ pub struct Model {
 // #[derive(Copy, Clone)]
 // `Msg` describes the different events you can modify state with.
 enum Msg {
-    PrepareCanvas,
     Play,
     Pause,
     Draw,
@@ -69,11 +73,6 @@ enum Msg {
 // `update` describes how to handle each `Msg`.
 fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
-        Msg::PrepareCanvas => {
-            model.canvas_width = (model.cell_size + 1) * model.universe.width() + 1;
-            model.canvas_height = (model.cell_size + 1) * model.universe.height() + 1;
-            orders.after_next_render(|_| Msg::Draw);
-        }
         Msg::Draw => {
             if model.pause {
             } else {

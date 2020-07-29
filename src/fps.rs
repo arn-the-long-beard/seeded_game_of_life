@@ -13,9 +13,11 @@ impl FpsCounter {
             last_frame_timestamp: window().performance().unwrap().now(), //should have it outside so it would be  more beautiful
         }
     }
-    /// Render function
-    /// Same as original in JS , I could have moved the call to DOM outside to make it "cleaner"
-    pub fn render(&mut self) -> FpsStatistic {
+    /// Ex- Render function
+    /// Same as original in JS except I moved most of call to DOM outside to make it "cleaner"
+    /// Maybe I could also have passed time as an argument to make it even better
+    /// If we removed calls to window() we could make unit test and benchmark
+    pub fn calculate(&mut self) -> FpsStatistic {
         let now = window().performance().unwrap().now();
         let delta = now - self.last_frame_timestamp;
         self.last_frame_timestamp = now;

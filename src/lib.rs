@@ -1,4 +1,4 @@
-use crate::universe::{Cell, Universe};
+use crate::universe::{ Universe};
 use seed::{prelude::*, *};
 use seed::util::get_value;
 use crate::fps::FpsCounter;

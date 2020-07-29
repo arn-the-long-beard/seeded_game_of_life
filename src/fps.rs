@@ -22,7 +22,7 @@ impl FpsCounter {
         let delta = now - self.last_frame_timestamp;
         self.last_frame_timestamp = now;
 
-        let fps = (1. / delta * 1000.);
+        let fps = 1. / delta * 1000.;
 
         self.frames.push(fps);
 
